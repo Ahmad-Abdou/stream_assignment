@@ -78,11 +78,8 @@ public class StreamAssignment {
     @Test
     public void task5(){
         int expectedSize = 8882;
-        Set<LocalDate> dates = null;
-
-        //Write code here
-
-        assertNotNull(dates);
+        Set<LocalDate> dates = people.stream().map(Person::getDateOfBirth).collect(Collectors.toSet());
+         assertNotNull(dates);
         assertTrue(dates instanceof TreeSet);
         assertEquals(expectedSize, dates.size());
     }
@@ -94,8 +91,7 @@ public class StreamAssignment {
     public void task6(){
         int expectedLength = 3;
 
-        Person[] result = null;
-
+        Person[] result = people.stream().filter(person -> person.getFirstName().equalsIgnoreCase("Erik")).toArray(Person[]::new);
 
         assertNotNull(result);
         assertEquals(expectedLength, result.length);
@@ -108,9 +104,7 @@ public class StreamAssignment {
     public void task7(){
         Person expected = new Person(5436, "Tea", "Håkansson", LocalDate.parse("1968-01-25"), Gender.FEMALE);
 
-        Optional<Person> optional = null;
-
-        //Write code here
+        Optional<Person> optional = people.stream().filter(person -> person.getPersonId() == 5436).findFirst();
 
         assertNotNull(optional);
         assertTrue(optional.isPresent());
