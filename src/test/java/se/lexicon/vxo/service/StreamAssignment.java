@@ -112,14 +112,17 @@ public class StreamAssignment {
     }
 
     /**
-     * Using min() define a comparator that extracts the oldest person i the list as an Optional
+     * Using min() define a comparator that extracts the oldest person in the list as an Optional
      */
     @Test
     public void task8(){
         LocalDate expectedBirthDate = LocalDate.parse("1910-01-02");
 
-        Optional<Person> optional = null;
+        Optional<Person> optional = people.stream().min(Comparator.comparing(Person::getDateOfBirth));
 
+        if(optional.isPresent()){
+            System.out.println(optional.get());
+        }
         //Write code here
 
         assertNotNull(optional);
