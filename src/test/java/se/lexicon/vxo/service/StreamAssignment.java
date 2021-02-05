@@ -77,6 +77,7 @@ public class StreamAssignment {
                 .filter(person -> person.getGender().equals(Gender.FEMALE))
                 .collect(Collectors.toList());
 
+
         assertNotNull(females);
         assertEquals(expectedSize, females.size());
     }
@@ -106,6 +107,7 @@ public class StreamAssignment {
         Person[] result = people.stream()
                 .filter(person -> person.getFirstName().equalsIgnoreCase("Erik"))
                 .toArray(Person[]::new);
+
 
         assertNotNull(result);
         assertEquals(expectedLength, result.length);
@@ -201,9 +203,8 @@ public class StreamAssignment {
         ToIntFunction<Person> personToAge =
                 person -> Period.between(person.getDateOfBirth(), LocalDate.parse("2019-12-20")).getYears();
         double expected = 54.42;
-        double averageAge = 0;
+        double averageAge = people.stream().mapToInt(personToAge).reduce(0,(number1,number2)->(number1+number2))/10000d;
 
-        //Write code here
 
         assertTrue(averageAge > 0);
         assertEquals(expected, averageAge, .01);
