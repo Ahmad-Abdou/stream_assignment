@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -87,7 +89,7 @@ public class StreamAssignment {
         int expectedSize = 8882;
         Set<LocalDate> dates = people.stream()
                 .map(Person::getDateOfBirth)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toCollection(TreeSet::new));
 
          assertNotNull(dates);
         assertTrue(dates instanceof TreeSet);
@@ -163,21 +165,27 @@ public class StreamAssignment {
         assertEquals(expectedSize, dtoList.size());
     }
     /**
-     * In a Stream Filter out one person with id 5914 from people and take the birthdate and build a string from data that the date contains then
+     * In a Stream Filter out one person with id 5914 from people and take the birthdate
+     * and build a string from data that the date contains then
      * return the string.
      */
     @Test
     public void task10(){
         String expected = "WEDNESDAY 19 DECEMBER 2012";
         int personId = 5914;
-        Optional<Person> optionalPerson = people.stream()
-                .filter(person -> person.getPersonId()== 5914)
-                .findFirst();
 
 
-        Optional<String> optional = null;
+        Predicate<Person> predicatePerson = person -> person.getPersonId()== 5914;
+        Function<Person,String > functionString = person ->
+            person.getDateOfBirth().getDayOfWeek() +" "+
+                    person.getDateOfBirth().getDayOfMonth()+" "+
+                    person.getDateOfBirth().getMonth() +" "+
+                    person.getDateOfBirth().getYear()+"";
 
-        //Write code here
+        
+
+        Optional<String> optional = people.stream().filter(predicatePerson).map(functionString).findFirst();
+
 
         assertNotNull(optional);
         assertTrue(optional.isPresent());
