@@ -217,9 +217,9 @@ public class StreamAssignment {
     public void task12(){
         String[] expected = {"Ada", "Ana", "Anna", "Ava", "Aya", "Bob", "Ebbe", "Efe", "Eje", "Elle", "Hannah", "Maram", "Natan", "Otto"};
 
-        String[] result = null;
+        String[] result = people.stream().filter(person -> person.getFirstName()=="palindromes").sorted().distinct().toArray(String[]::new );
 
-        //Write code here
+
 
         assertNotNull(result);
         assertArrayEquals(expected, result);
@@ -231,9 +231,9 @@ public class StreamAssignment {
     @Test
     public void task13(){
         int expectedSize = 107;
-        Map<String, List<Person>> personMap = null;
+        Map<String, List<Person>> personMap = people.stream().collect(Collectors.groupingBy(Person::getLastName));
 
-        //Write code here
+
 
         assertNotNull(personMap);
         assertEquals(expectedSize, personMap.size());
@@ -246,7 +246,7 @@ public class StreamAssignment {
     public void task14(){
         LocalDate[] _2020_dates = null;
 
-        //Write code here
+
 
 
         assertNotNull(_2020_dates);
